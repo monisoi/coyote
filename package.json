@@ -1,0 +1,112 @@
+{
+  "name": "coyote",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "16.3.0-alpha.2",
+    "react-native": "0.54.2",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "babel-jest": "23.0.0-alpha.0",
+    "babel-preset-react-native": "4.0.0",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.7.0",
+    "jest": "22.4.2",
+    "prettier": "^1.11.1",
+    "react-test-renderer": "16.3.0-alpha.2"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    },
+    "extends": [
+      "airbnb",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "printWidth": 100,
+          "singleQuote": true,
+          "trailingComma": "es5"
+        }
+      ],
+      "global-require": "off",
+      "import/no-dynamic-require": "off",
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          "devDependencies": true
+        }
+      ],
+      "no-param-reassign": [
+        "error",
+        {
+          "props": true,
+          "ignorePropertyModificationsFor": [
+            "req"
+          ]
+        }
+      ],
+      "no-underscore-dangle": [
+        "error",
+        {
+          "allowAfterThis": false
+        }
+      ],
+      "no-unused-vars": [
+        "error",
+        {
+          "vars": "local",
+          "args": "after-used",
+          "ignoreRestSiblings": true,
+          "argsIgnorePattern": "[iI]gnored"
+        }
+      ],
+      "new-cap": [
+        "error",
+        {
+          "newIsCap": true,
+          "newIsCapExceptions": [],
+          "capIsNew": false,
+          "capIsNewExceptions": [
+            "Immutable.Map",
+            "Immutable.Set",
+            "Immutable.List",
+            "express.Router"
+          ]
+        }
+      ],
+      "camelcase": "off",
+      "jsx-a11y/no-static-element-interactions": "warn",
+      "jsx-a11y/href-no-hash": "off",
+      "no-undefined": "error",
+      "object-shorthand": [
+        "error",
+        "always",
+        {
+          "avoidQuotes": false
+        }
+      ]
+    }
+  }
+}
