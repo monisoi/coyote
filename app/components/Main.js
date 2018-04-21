@@ -3,6 +3,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import GameField from './GameField';
+import Controller from './Controller';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,5 +27,6 @@ const styles = StyleSheet.create({
 export default () => (
   <View style={styles.container}>
     <GameField turn={1} />
+    <Controller />
   </View>
 );

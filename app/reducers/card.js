@@ -37,7 +37,7 @@ const initialState = {
     102,
     103,
   ],
-  field: [],
+  field: [0, 0, 0, 0, 0, 0],
   trash: [],
   answer: 0,
 };
