@@ -1,15 +1,14 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { View, Button } from 'react-native';
+// @flow
 
-const CoyoteButton = ({}) => (
+import React from 'react';
+import type { Node } from 'react';
+import { connect } from 'react-redux';
+import { View, Text } from 'react-native';
+
+export const CoyoteButton = (): Node => (
   <View>
-    <Button title="Coyote!" color="#841584" />
+    <Text>Coyote!</Text>
   </View>
 );
-
-// const mapStateToProps = state => ({
-//   turn: state.game.turn,
-// });
 
 export default connect()(CoyoteButton);

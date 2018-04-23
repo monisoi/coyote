@@ -1,22 +1,27 @@
-import React, { PropTypes } from 'react';
+// @flow
+
+import React from 'react';
+import type { Node } from 'react';
 import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
 
-const Player = ({ number, card, life }) => (
+type Props = {
+  number: number,
+  fieldCards: [number],
+  playersLife: [number],
+};
+
+export const Player = ({ number, fieldCards, playersLife }: Props): Node => (
   <View>
     <Text>{`Player: ${number}`}</Text>
-    <Text>{`Card: ${card[number - 1]}`}</Text>
-    <Text>{`Life: ${life[number - 1]}`}</Text>
+    <Text>{`Card: ${fieldCards[number - 1]}`}</Text>
+    <Text>{`Life: ${playersLife[number - 1]}`}</Text>
   </View>
 );
 
-// Player.propTypes = {
-//   life: PropTypes.number.isRequired,
-// };
-
 const mapStateToProps = state => ({
-  card: state.card.field,
-  life: state.life.playersLife,
+  fieldCards: state.card.field,
+  playersLife: state.life.playersLife,
 });
 
 export default connect(mapStateToProps)(Player);
