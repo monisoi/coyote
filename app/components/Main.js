@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import type { Node } from 'react';
 import { StyleSheet, View } from 'react-native';
 import GameField from './GameField';
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
 export default (): Node => (
   <View style={styles.container}>
-    <GameField turn />
+    <GameField />
     <Controller />
   </View>
 );

@@ -4,7 +4,7 @@ import React from 'react';
 import type { Node } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { View, Text, Button } from 'react-native';
+import { View, Button } from 'react-native';
 import CoyoteButton from './CoyoteButton';
 import { START_NEW_GAME, GO_TO_NEXT_TURN } from '../actions/types';
 

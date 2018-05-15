@@ -21,7 +21,7 @@ export const Player = ({ number, fieldCards, playersLife }: Props): Node => (
 
 const mapStateToProps = state => ({
   fieldCards: state.card.field,
-  playersLife: state.life.playersLife,
+  playersLife: state.game.playersLife,
 });
 
 export default connect(mapStateToProps)(Player);

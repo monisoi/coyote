@@ -2,13 +2,24 @@
 
 import React from 'react';
 import type { Node } from 'react';
+import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Button } from 'react-native';
+import { CALL_COYOTE } from '../actions/types';
 
-export const CoyoteButton = (): Node => (
+type Props = {
+  dispatch: Dispatch,
+  answer: number,
+};
+
+export const CoyoteButton = ({ dispatch, answer }: Props): Node => (
   <View>
-    <Text>Coyote!</Text>
+    <Button onPress={() => dispatch({ type: CALL_COYOTE, answer })} title="Coyote!!" color="#123456" />
   </View>
 );
 
-export default connect()(CoyoteButton);
+const mapStateToProps = state => ({
+  answer: state.card.answer,
+});
+
+export default connect(mapStateToProps)(CoyoteButton);

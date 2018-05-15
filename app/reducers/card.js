@@ -1,4 +1,4 @@
-import { START_NEW_GAME, GO_TO_NEXT_TURN } from '../actions/types';
+import { START_NEW_GAME, CALL_COYOTE } from '../actions/types';
 
 const DECK = [
   20,
@@ -75,6 +75,8 @@ const distributeCards = (deck, field, trash) => {
   };
 };
 
+const sumElements = array => array.reduce((prev, current) => prev + current);
+
 export default (state = initialState, action = {}) => {
   const { type } = action;
   switch (type) {
@@ -85,9 +87,10 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         ...cards,
+        answer: sumElements(cards.field),
       };
     }
-    case GO_TO_NEXT_TURN: {
+    case CALL_COYOTE: {
       const { deck, field, trash } = state;
       const cards = distributeCards(deck, field, trash);
       return {

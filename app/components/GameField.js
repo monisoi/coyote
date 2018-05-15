@@ -9,18 +9,24 @@ import Player from './Player';
 const PLAYERS = [1, 2, 3, 4, 5, 6];
 
 type Props = {
-  turn: number,
+  turnOf: number,
+  calledNumber: number,
+  answer: number,
 };
 
-export const GameField = ({ turn }: Props): Node => (
+export const GameField = ({ turnOf, calledNumber, answer }: Props): Node => (
   <View>
-    <Text>{`Turn of player ${turn}`}</Text>
+    <Text>{`Turn of player ${turnOf}`}</Text>
+    <Text>{`called number ${calledNumber}`}</Text>
+    <Text>{`answer ${answer}`}</Text>
     {PLAYERS.map(n => <Player key={n} number={n} />)}
   </View>
 );
 
 const mapStateToProps = state => ({
-  turn: state.game.turn,
+  turnOf: state.game.turnOf,
+  calledNumber: state.game.calledNumber,
+  answer: state.card.answer,
 });
 
 export default connect(mapStateToProps)(GameField);
