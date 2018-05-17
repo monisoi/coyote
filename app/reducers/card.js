@@ -149,12 +149,12 @@ export default (state = initialState, action = {}) => {
         field,
         trash
       );
-      const { deck: unveiledDeck, field: unveiledField } = unveilUnknownCard(distDeck, distField);
+      const { deck: unveiledDeck, field: unveiledField } = reflectUnknown(distDeck, distField);
       const answer = calculateAnswer(unveiledField);
       return {
         ...state,
         deck: unveiledDeck,
-        field: unveiledDeck,
+        field: unveiledField,
         trash: distTrash,
         answer,
       };
