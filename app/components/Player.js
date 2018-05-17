@@ -8,20 +8,20 @@ import { Text, View } from 'react-native';
 type Props = {
   number: number,
   fieldCards: [number],
-  playersLife: [number],
+  lifePoints: [number],
 };
 
-export const Player = ({ number, fieldCards, playersLife }: Props): Node => (
+export const Player = ({ number, fieldCards, lifePoints }: Props): Node => (
   <View>
     <Text>{`Player: ${number}`}</Text>
     <Text>{`Card: ${fieldCards[number - 1]}`}</Text>
-    <Text>{`Life: ${playersLife[number - 1]}`}</Text>
+    <Text>{`Life: ${lifePoints[number - 1]}`}</Text>
   </View>
 );
 
 const mapStateToProps = state => ({
   fieldCards: state.card.field,
-  playersLife: state.game.playersLife,
+  lifePoints: state.game.lifePoints,
 });
 
 export default connect(mapStateToProps)(Player);

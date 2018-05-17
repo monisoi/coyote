@@ -5,17 +5,17 @@ const PLAYERS = 6;
 const initialState = {
   turnOf: 1,
   calledNumber: 0,
-  playersLife: [3, 3, 3, 3, 3, 3],
+  lifePoints: [3, 3, 3, 3, 3, 3],
 };
 
-const reflectDamage2PlayersLife = (answer, calledNumber, turnOf, playersLife) => {
-  let currentPlayersLife = [...playersLife];
+const reflectDamage2lifePoints = (answer, calledNumber, turnOf, lifePoints) => {
+  let currentlifePoints = [...lifePoints];
   if (calledNumber > answer) {
-    currentPlayersLife[turnOf - 1] -= 1;
+    currentlifePoints[turnOf - 1] -= 1;
   } else {
-    currentPlayersLife[0] -= 1;
+    currentlifePoints[0] -= 1;
   }
-  return currentPlayersLife;
+  return currentlifePoints;
 }
 
 export default (state = initialState, action = {}) => {
@@ -37,13 +37,13 @@ export default (state = initialState, action = {}) => {
       };
     }
     case CALL_COYOTE: {
-      const { turnOf, calledNumber, playersLife } = state;
+      const { turnOf, calledNumber, lifePoints } = state;
       const { answer = 0 } = action || {};
       return {
         ...state,
         turnOf: (turnOf + 1) % 6 || 6,
         calledNumber: 1,
-        playersLife: reflectDamage2PlayersLife(answer, calledNumber, turnOf, playersLife),
+        lifePoints: reflectDamage2lifePoints(answer, calledNumber, turnOf, lifePoints),
       };
     }
     default: {

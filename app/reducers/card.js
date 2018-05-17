@@ -1,5 +1,11 @@
 import { START_NEW_GAME, CALL_COYOTE } from '../actions/types';
 
+const NIGHT = 100;
+const DOUBLE = 101;
+const MAX0 = 102;
+const UNKNOWN = 103;
+const SPECIAL_CARDS = [NIGHT, DOUBLE, MAX0, UNKNOWN];
+
 const DECK = [
   20,
   15,
@@ -33,23 +39,18 @@ const DECK = [
   -5,
   -5,
   -10,
-  100,
-  101,
-  102,
-  103,
+  NIGHT,
+  DOUBLE,
+  MAX0,
+  UNKNOWN,
 ];
 
 const initialState = {
   deck: DECK,
-  field: [0, 0, 0, 0, 0, 0],
+  field: [],
   trash: [],
   answer: 0,
 };
-
-// 100: 夜
-// 101: x2
-// 102: Max->0
-// 103: ?
 
 const shuffle = array => {
   let n = array.length;
@@ -61,7 +62,7 @@ const shuffle = array => {
     shuffledArray[n] = shuffledArray[i];
     shuffledArray[i] = t;
   }
-  return shuffledArray;  
+  return shuffledArray;
 };
 
 const distributeCards = (deck, field, trash) => {
@@ -75,7 +76,50 @@ const distributeCards = (deck, field, trash) => {
   };
 };
 
-const sumElements = array => array.reduce((prev, current) => prev + current);
+const isSpecialCard = card => !!SPECIAL_CARDS.find(x => x === card);
+
+const reflectUnknown = (deck, field) => {
+  if (field.find(x => x === UNKNOWN)) {
+    const currentDeck = [...deck];
+    const currentField = [...field, ...currentDeck.splice(0, 1)];
+    return {
+      deck: currentDeck,
+      field: currentField,
+    };
+  }
+  return {
+    deck,
+    field,
+  };
+};
+
+const findMaxCard = field => {
+  let max = 0;
+  for (let card of field) {
+    if (card > max && !isSpecialCard(card)) {
+      max = card;
+    }
+  }
+  return max;
+};
+
+const reflectMaxZero = field => {
+  if (field.find(x => x === MAX0)) {
+    const max = findMaxCard(field);
+    return field.map(card => (card === max ? 0 : card));
+  }
+  return field;
+};
+
+const reflectDouble = (field, subTotal) => (field.find(x => x === DOUBLE) ? subTotal * 2 : subTotal);
+
+const calculateAnswer = field => {
+  const total = reflectMaxZero(field).reduce(
+    (prev, current) => (isSpecialCard(current) ? prev : prev + current),
+    0
+  );
+  return reflectDouble(field, total);
+};
 
 export default (state = initialState, action = {}) => {
   const { type } = action;
@@ -83,19 +127,36 @@ export default (state = initialState, action = {}) => {
     case START_NEW_GAME: {
       const { deck, field, trash } = initialState;
       const shuffledDeck = shuffle(deck);
-      const cards = distributeCards(shuffledDeck, field, trash);
+      const { deck: distDeck, field: distField, trash: distTrash } = distributeCards(
+        shuffledDeck,
+        field,
+        trash
+      );
+      const { deck: unveiledDeck, field: unveiledField } = reflectUnknown(distDeck, distField);
+      const answer = calculateAnswer(unveiledField);
       return {
         ...state,
-        ...cards,
-        answer: sumElements(cards.field),
+        deck: unveiledDeck,
+        field: unveiledField,
+        trash: distTrash,
+        answer,
       };
     }
     case CALL_COYOTE: {
       const { deck, field, trash } = state;
-      const cards = distributeCards(deck, field, trash);
+      const { deck: distDeck, field: distField, trash: distTrash } = distributeCards(
+        deck,
+        field,
+        trash
+      );
+      const { deck: unveiledDeck, field: unveiledField } = unveilUnknownCard(distDeck, distField);
+      const answer = calculateAnswer(unveiledField);
       return {
         ...state,
-        ...cards,
+        deck: unveiledDeck,
+        field: unveiledDeck,
+        trash: distTrash,
+        answer,
       };
     }
     default: {

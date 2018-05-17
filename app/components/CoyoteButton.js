@@ -14,7 +14,11 @@ type Props = {
 
 export const CoyoteButton = ({ dispatch, answer }: Props): Node => (
   <View>
-    <Button onPress={() => dispatch({ type: CALL_COYOTE, answer })} title="Coyote!!" color="#123456" />
+    <Button
+      onPress={() => dispatch({ type: CALL_COYOTE, answer })}
+      title="Coyote!!"
+      color="#123456"
+    />
   </View>
 );
 
