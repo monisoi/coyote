@@ -1,10 +1,10 @@
 import { START_NEW_GAME, CALL_COYOTE } from '../actions/types';
 
-const NIGHT = 100;
-const DOUBLE = 101;
-const MAX0 = 102;
-const UNKNOWN = 103;
-const SPECIAL_CARDS = [NIGHT, DOUBLE, MAX0, UNKNOWN];
+export const NIGHT = 100;
+export const DOUBLE = 101;
+export const MAX0 = 102;
+export const UNKNOWN = 103;
+export const SPECIAL_CARDS = [NIGHT, DOUBLE, MAX0, UNKNOWN];
 
 const DECK = [
   20,
