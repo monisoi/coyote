@@ -12,13 +12,15 @@ type Props = {
   turnOf: number,
   calledNumber: number,
   answer: number,
+  deck: [number],
 };
 
-export const GameField = ({ turnOf, calledNumber, answer }: Props): Node => (
+export const GameField = ({ turnOf, calledNumber, answer, deck }: Props): Node => (
   <View>
     <Text>{`Turn of player ${turnOf}`}</Text>
     <Text>{`called number ${calledNumber}`}</Text>
     <Text>{`answer ${answer}`}</Text>
+    <Text>{`deck lenght ${deck.length}`}</Text>
     {PLAYERS.map(n => <Player key={n} number={n} />)}
   </View>
 );
@@ -27,6 +29,7 @@ const mapStateToProps = state => ({
   turnOf: state.game.turnOf,
   calledNumber: state.game.calledNumber,
   answer: state.card.answer,
+  deck: state.card.deck,
 });
 
 export default connect(mapStateToProps)(GameField);

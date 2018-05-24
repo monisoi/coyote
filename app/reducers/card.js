@@ -111,7 +111,8 @@ const reflectMaxZero = field => {
   return field;
 };
 
-const reflectDouble = (field, subTotal) => (field.find(x => x === DOUBLE) ? subTotal * 2 : subTotal);
+const reflectDouble = (field, subTotal) =>
+  field.find(x => x === DOUBLE) ? subTotal * 2 : subTotal;
 
 const calculateAnswer = field => {
   const total = reflectMaxZero(field).reduce(
@@ -120,6 +121,8 @@ const calculateAnswer = field => {
   );
   return reflectDouble(field, total);
 };
+
+const needsShuffle = (deck, field) => deck.length <= 6 || field.find(x => x === NIGHT);
 
 export default (state = initialState, action = {}) => {
   const { type } = action;
@@ -143,7 +146,9 @@ export default (state = initialState, action = {}) => {
       };
     }
     case CALL_COYOTE: {
-      const { deck, field, trash } = state;
+      const { deck, field, trash } = needsShuffle(state.deck, state.field)
+        ? { deck: shuffle(initialState.deck), field: initialState.field, trash: initialState.trash }
+        : state;
       const { deck: distDeck, field: distField, trash: distTrash } = distributeCards(
         deck,
         field,
