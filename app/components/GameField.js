@@ -11,16 +11,18 @@ const PLAYERS = [1, 2, 3, 4, 5, 6];
 type Props = {
   turnOf: number,
   calledNumber: number,
+  lifePoints: [number],
   answer: number,
   deck: [number],
 };
 
-export const GameField = ({ turnOf, calledNumber, answer, deck }: Props): Node => (
+export const GameField = ({ turnOf, calledNumber, lifePoints, answer, deck }: Props): Node => (
   <View>
     <Text>{`Turn of player ${turnOf}`}</Text>
     <Text>{`called number ${calledNumber}`}</Text>
     <Text>{`answer ${answer}`}</Text>
     <Text>{`deck lenght ${deck.length}`}</Text>
+    {(() => lifePoints[0] <= 0 ? <Text>GAME OVER</Text> : null)()}
     {PLAYERS.map(n => <Player key={n} number={n} />)}
   </View>
 );
@@ -28,6 +30,7 @@ export const GameField = ({ turnOf, calledNumber, answer, deck }: Props): Node =
 const mapStateToProps = state => ({
   turnOf: state.game.turnOf,
   calledNumber: state.game.calledNumber,
+  lifePoints: state.game.lifePoints,
   answer: state.card.answer,
   deck: state.card.deck,
 });
