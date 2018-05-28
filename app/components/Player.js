@@ -3,8 +3,16 @@
 import React from 'react';
 import type { Node } from 'react';
 import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { NIGHT, DOUBLE, MAX0, UNKNOWN } from '../reducers/card'
+
+const styles = StyleSheet.create({
+  container: {
+    width: 100,
+    height: 150,
+    backgroundColor: 'steelblue',
+  },
+});
 
 type Props = {
   number: number,
@@ -33,7 +41,7 @@ const convertDisplay = card => {
 };
 
 export const Player = ({ number, fieldCards, lifePoints }: Props): Node => (
-  <View>
+  <View style={styles.container}>
     <Text>{`Player: ${number}`}</Text>
     <Text>{`Card: ${convertDisplay(fieldCards[number - 1])}`}</Text>
     <Text>{`Life: ${lifePoints[number - 1]}`}</Text>

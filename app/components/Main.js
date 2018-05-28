@@ -9,25 +9,19 @@ import Controller from './Controller';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  gameField: {
+    flex: 4,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  controller: {
+    flex: 1,
   },
 });
 
 export default (): Node => (
   <View style={styles.container}>
-    <GameField />
-    <Controller />
+    <GameField style={styles.gameField}/>
+    <Controller style={styles.controller}/>
   </View>
 );
