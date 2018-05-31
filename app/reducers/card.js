@@ -76,10 +76,10 @@ const distributeCards = (deck, field, trash) => {
   };
 };
 
-const isSpecialCard = card => !!SPECIAL_CARDS.find(x => x === card);
+const isSpecialCard = card => !!SPECIAL_CARDS.includes(card);
 
 const reflectUnknown = (deck, field) => {
-  if (field.find(x => x === UNKNOWN)) {
+  if (field.includes(UNKNOWN)) {
     const currentDeck = [...deck];
     const currentField = [...field, ...currentDeck.splice(0, 1)];
     return {
@@ -104,7 +104,7 @@ const findMaxCard = field => {
 };
 
 const reflectMaxZero = field => {
-  if (field.find(x => x === MAX0)) {
+  if (field.includes(MAX0)) {
     const max = findMaxCard(field);
     return field.map(card => (card === max ? 0 : card));
   }
@@ -112,7 +112,7 @@ const reflectMaxZero = field => {
 };
 
 const reflectDouble = (field, subTotal) =>
-  field.find(x => x === DOUBLE) ? subTotal * 2 : subTotal;
+  field.includes(DOUBLE) ? subTotal * 2 : subTotal;
 
 const calculateAnswer = field => {
   const total = reflectMaxZero(field).reduce(
