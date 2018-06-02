@@ -1,3 +1,5 @@
 export const START_NEW_GAME = 'START_NEW_GAME';
 export const GO_TO_NEXT_TURN = 'GO_TO_NEXT_TURN';
 export const CALL_COYOTE = 'CALL_COYOTE';
+export const CHANGE_CALL_NUMBER = 'CHANGE_CALL_NUMBER';
+export const CALL_NUMBER = 'CALL_NUMBER';

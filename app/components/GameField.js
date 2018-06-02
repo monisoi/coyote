@@ -22,36 +22,56 @@ const styles = StyleSheet.create({
     alignContent: 'space-around',
     justifyContent: 'space-around',
     backgroundColor: 'skyblue',
-  }
+  },
 });
 
 const PLAYERS = [1, 2, 3, 4, 5, 6];
 
 type Props = {
   turnOf: number,
+  inputNumber: number,
   calledNumber: number,
   lifePoints: [number],
   answer: number,
   deck: [number],
 };
 
-export const GameField = ({ turnOf, calledNumber, lifePoints, answer, deck }: Props): Node => (
+const renderGameOver = lifePoint => (lifePoint <= 0 ? <Text>GAME OVER</Text> : null);
+
+const renderInvalidNumberAlert = (inputNumber, formerCalledNumber) => {
+  if (!Number(inputNumber)) {
+    return <Text>数字でコールしてください</Text>;
+  }
+  if (inputNumber <= formerCalledNumber) {
+    return <Text>前のターンよりも大きな数字をコールしてください</Text>;
+  }
+  return null;
+};
+
+export const GameField = ({
+  turnOf,
+  inputNumber,
+  calledNumber,
+  lifePoints,
+  answer,
+  deck,
+}: Props): Node => (
   <View style={styles.container}>
     <View style={styles.gameFeatures}>
       <Text>{`Turn of player ${turnOf}`}</Text>
       <Text>{`called number ${calledNumber}`}</Text>
       <Text>{`answer ${answer}`}</Text>
       <Text>{`deck length ${deck.length}`}</Text>
-      {(() => lifePoints[0] <= 0 ? <Text>GAME OVER</Text> : null)()}
+      {renderGameOver(lifePoints[0])}
+      {renderInvalidNumberAlert(inputNumber, calledNumber)}
     </View>
-    <View style={styles.players}>
-      {PLAYERS.map(n => <Player key={n} number={n} />)}
-    </View>
+    <View style={styles.players}>{PLAYERS.map(n => <Player key={n} number={n} />)}</View>
   </View>
 );
 
 const mapStateToProps = state => ({
   turnOf: state.game.turnOf,
+  inputNumber: state.game.inputNumber,
   calledNumber: state.game.calledNumber,
   lifePoints: state.game.lifePoints,
   answer: state.card.answer,

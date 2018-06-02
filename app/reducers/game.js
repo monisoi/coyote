@@ -1,24 +1,34 @@
-import { START_NEW_GAME, GO_TO_NEXT_TURN, CALL_COYOTE } from '../actions/types';
+import {
+  START_NEW_GAME,
+  GO_TO_NEXT_TURN,
+  CALL_COYOTE,
+  CHANGE_CALL_NUMBER,
+  CALL_NUMBER,
+} from '../actions/types';
 
 const PLAYERS = 6;
 
 const initialState = {
   turnOf: 1,
+  inputNumber: 0,
   calledNumber: 0,
   lifePoints: [3, 3, 3, 3, 3, 3],
 };
 
 const reflectDamage2lifePoints = (answer, calledNumber, turnOf, lifePoints) => {
-  let currentlifePoints = [...lifePoints];
+  let currentLifePoints = [...lifePoints];
   if (calledNumber > answer) {
-    currentlifePoints[turnOf - 1] -= 1;
+    currentLifePoints[turnOf - 1] -= 1;
   } else {
-    currentlifePoints[0] -= 1;
+    currentLifePoints[0] -= 1;
   }
-  return currentlifePoints;
+  return currentLifePoints;
 };
 
 const isGameOver = lifePoints => lifePoints[0] <= 0;
+
+const isValidNumber = (inputNumber, formerCalledNumber) =>
+  Number(inputNumber) ? inputNumber > formerCalledNumber : false;
 
 export default (state = initialState, action = {}) => {
   const { type } = action;
@@ -53,6 +63,24 @@ export default (state = initialState, action = {}) => {
             calledNumber: 1,
             lifePoints: reflectDamage2lifePoints(answer, calledNumber, turnOf, lifePoints),
           };
+    }
+    case CHANGE_CALL_NUMBER: {
+      const { inputNumber = 0 } = action || {};
+      return {
+        ...state,
+        inputNumber,
+      };
+    }
+    case CALL_NUMBER: {
+      const { inputNumber = 0 } = action || {};
+      const { turnOf, calledNumber } = state;
+      return isValidNumber(inputNumber, calledNumber)
+        ? {
+            ...state,
+            turnOf: (turnOf + 1) % 6 || 6,
+            calledNumber: inputNumber,
+          }
+        : state;
     }
     default: {
       return state;
