@@ -38,7 +38,10 @@ type Props = {
 
 const renderGameOver = lifePoint => (lifePoint <= 0 ? <Text>GAME OVER</Text> : null);
 
-const renderInvalidNumberAlert = (inputNumber, formerCalledNumber) => {
+const renderInvalidNumberAlert = (turnOf, inputNumber, formerCalledNumber) => {
+  if (turnOf !== 1) {
+    return null;
+  }
   if (!Number(inputNumber)) {
     return <Text>数字でコールしてください</Text>;
   }
@@ -63,7 +66,7 @@ export const GameField = ({
       <Text>{`answer ${answer}`}</Text>
       <Text>{`deck length ${deck.length}`}</Text>
       {renderGameOver(lifePoints[0])}
-      {renderInvalidNumberAlert(inputNumber, calledNumber)}
+      {renderInvalidNumberAlert(turnOf, inputNumber, calledNumber)}
     </View>
     <View style={styles.players}>{PLAYERS.map(n => <Player key={n} number={n} />)}</View>
   </View>

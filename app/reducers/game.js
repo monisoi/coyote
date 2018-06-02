@@ -45,6 +45,7 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         turnOf: (turnOf + 1) % 6 || 6,
+        inputNumber: calledNumber + 4,
         calledNumber: calledNumber + 3,
       };
     }
