@@ -4,8 +4,14 @@ import React from 'react';
 import type { Node } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { View, Button } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import { CALL_COYOTE } from '../actions/types';
+
+const styles = StyleSheet.create({
+  coyoteButton: {
+    flex: 1,
+  },
+});
 
 type Props = {
   dispatch: Dispatch,
@@ -13,10 +19,10 @@ type Props = {
 };
 
 export const CoyoteButton = ({ dispatch, answer }: Props): Node => (
-  <View>
+  <View style={styles.coyoteButton}>
     <Button
       onPress={() => dispatch({ type: CALL_COYOTE, answer })}
-      title="Coyote!!"
+      title="コヨーテ！"
       color="#123456"
     />
   </View>

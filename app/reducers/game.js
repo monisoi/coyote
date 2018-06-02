@@ -79,7 +79,7 @@ export default (state = initialState, action = {}) => {
         ? {
             ...state,
             turnOf: (turnOf + 1) % 6 || 6,
-            calledNumber: inputNumber,
+            calledNumber: inputNumber + 1,
           }
         : state;
     }

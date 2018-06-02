@@ -11,8 +11,18 @@ import { START_NEW_GAME, GO_TO_NEXT_TURN } from '../actions/types';
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  startButton: {
+    flex: 1,
+    backgroundColor: 'steelblue',
+  },
+  nextButton: {
+    flex: 1,
+    backgroundColor: 'steelblue',
   },
 });
 
@@ -21,13 +31,25 @@ type Props = {
   turnOf: number,
 };
 
-const renderActionButton = turnOf => turnOf === 1 ? <NumberCallButton /> : <CoyoteButton />;
+const renderActionButton = turnOf => (turnOf === 1 ? <NumberCallButton /> : <CoyoteButton />);
+
+const renderStartButton = dispatch => (
+  <View style={styles.startButton}>
+    <Button onPress={() => dispatch({ type: START_NEW_GAME })} title="最初から" color="#123456" />
+  </View>
+);
+
+const renderNextButton = dispatch => (
+  <View style={styles.nextButton}>
+    <Button onPress={() => dispatch({ type: GO_TO_NEXT_TURN })} title="次へ" color="#123456" />
+  </View>
+);
 
 export const Controller = ({ dispatch, turnOf }: Props): Node => (
   <View style={styles.container}>
-    <Button onPress={() => dispatch({ type: START_NEW_GAME })} title="Reset" color="#123456" />
+    {renderStartButton(dispatch)}
     {renderActionButton(turnOf)}
-    <Button onPress={() => dispatch({ type: GO_TO_NEXT_TURN })} title="Next" color="#123456" />
+    {renderNextButton(dispatch)}
   </View>
 );
 

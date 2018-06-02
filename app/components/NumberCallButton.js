@@ -4,22 +4,55 @@ import React from 'react';
 import type { Node } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { View, Button, TextInput } from 'react-native';
+import { StyleSheet, View, Button, TextInput } from 'react-native';
 import { CALL_COYOTE, CHANGE_CALL_NUMBER, CALL_NUMBER } from '../actions/types';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  numberInputBoxWrapper: {},
+  numberInputBox: {
+    borderColor: 'gray',
+    borderWidth: 1,
+    width: 40,
+  },
+  numberCallButtonWrapper: {},
+});
 
 type Props = {
   dispatch: Dispatch,
   inputNumber: number,
 };
 
-export const NumberCallButton = ({ dispatch, inputNumber }: Props): Node => (
-  <View>
+const renderNumberInputBox = (dispatch, inputNumber) => (
+  <View style={styles.numberCallButtonWrapper}>
     <TextInput
       onChangeText={text => dispatch({ type: CHANGE_CALL_NUMBER, inputNumber: Number(text) })}
       value={String(inputNumber)}
+      maxLength={3}
       keyboardType="numeric"
+      style={styles.numberInputBox}
     />
-    <Button onPress={() => dispatch({ type: CALL_NUMBER, inputNumber })} title="Call" color="#123456" />
+  </View>
+);
+
+const renderNumberCallButton = (dispatch, inputNumber) => (
+  <View style={styles.numberCallButtonWrapper}>
+    <Button
+      onPress={() => dispatch({ type: CALL_NUMBER, inputNumber })}
+      title="コール"
+      color="#123456"
+    />
+  </View>
+);
+
+export const NumberCallButton = ({ dispatch, inputNumber }: Props): Node => (
+  <View style={styles.container}>
+    {renderNumberInputBox(dispatch, inputNumber)}
+    {renderNumberCallButton(dispatch, inputNumber)}
   </View>
 );
 

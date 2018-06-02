@@ -42,9 +42,9 @@ const convertDisplay = card => {
 
 export const Player = ({ number, fieldCards, lifePoints }: Props): Node => (
   <View style={styles.container}>
-    <Text>{`Player: ${number}`}</Text>
-    <Text>{`Card: ${convertDisplay(fieldCards[number - 1])}`}</Text>
-    <Text>{`Life: ${lifePoints[number - 1]}`}</Text>
+    <Text>{`プレイヤー：${number}`}</Text>
+    <Text>{`カード：${convertDisplay(fieldCards[number - 1])}`}</Text>
+    <Text>{`ライフ：${lifePoints[number - 1]}`}</Text>
   </View>
 );
 

@@ -11,17 +11,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
-  gameField: {
-    flex: 4,
-  },
-  controller: {
-    flex: 1,
-  },
 });
 
 export default (): Node => (
   <View style={styles.container}>
-    <GameField style={styles.gameField}/>
-    <Controller style={styles.controller}/>
+    <GameField />
+    <Controller />
   </View>
 );

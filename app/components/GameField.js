@@ -8,15 +8,15 @@ import Player from './Player';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 4,
   },
   gameFeatures: {
     flex: 1,
-    marginTop: 20,
+    marginTop: 30,
     backgroundColor: 'powderblue',
   },
   players: {
-    flex: 4,
+    flex: 3,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignContent: 'space-around',
@@ -61,10 +61,10 @@ export const GameField = ({
 }: Props): Node => (
   <View style={styles.container}>
     <View style={styles.gameFeatures}>
-      <Text>{`Turn of player ${turnOf}`}</Text>
-      <Text>{`called number ${calledNumber}`}</Text>
-      <Text>{`answer ${answer}`}</Text>
-      <Text>{`deck length ${deck.length}`}</Text>
+      <Text>{`プレイヤー${turnOf}のターン`}</Text>
+      <Text>{`前のコール：${calledNumber}`}</Text>
+      <Text>{`合計：${answer}`}</Text>
+      <Text>{`山札の残り：${deck.length}`}</Text>
       {renderGameOver(lifePoints[0])}
       {renderInvalidNumberAlert(turnOf, inputNumber, calledNumber)}
     </View>
