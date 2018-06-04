@@ -4,7 +4,8 @@ import React from 'react';
 import type { Node } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
-import { NIGHT, DOUBLE, MAX0, UNKNOWN } from '../reducers/card'
+import { Icon } from 'react-native-elements';
+import { NIGHT, DOUBLE, MAX0, UNKNOWN } from '../reducers/card';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,11 +41,36 @@ const convertDisplay = card => {
   }
 };
 
+const renderLifePoint = lifePoint => {
+  if (lifePoint === 3) {
+    return (
+      <View>
+        <Icon name="favorite" color="red" />
+        <Icon name="favorite" color="red" />
+      </View>
+    );
+  }
+  if (lifePoint === 2) {
+    return (
+      <View>
+        <Icon name="favorite" color="red" />
+        <Icon name="favorite-border" color="red" />
+      </View>
+    );
+  }
+  return (
+    <View>
+      <Icon name="favorite-border" color="red" />
+      <Icon name="favorite-border" color="red" />
+    </View>
+  );
+};
+
 export const Player = ({ number, fieldCards, lifePoints }: Props): Node => (
   <View style={styles.container}>
     <Text>{`プレイヤー：${number}`}</Text>
     <Text>{`カード：${convertDisplay(fieldCards[number - 1])}`}</Text>
-    <Text>{`ライフ：${lifePoints[number - 1]}`}</Text>
+    {renderLifePoint(lifePoints[number - 1])}
   </View>
 );
 

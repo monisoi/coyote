@@ -10,6 +10,7 @@ import { CALL_COYOTE } from '../actions/types';
 const styles = StyleSheet.create({
   coyoteButton: {
     flex: 1,
+    backgroundColor: 'firebrick',
   },
 });
 
