@@ -9,10 +9,38 @@ import { NIGHT, DOUBLE, MAX0, UNKNOWN } from '../reducers/card';
 
 const styles = StyleSheet.create({
   container: {
-    width: 100,
-    height: 150,
+    width: '30%',
+    height: '42%',
     backgroundColor: 'steelblue',
   },
+  upper: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  playerWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  lifePoint: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  lower: {
+    flex: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  card: {
+    width: '70%',
+    height: '70%',
+    backgroundColor: 'gray',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  }
 });
 
 type Props = {
@@ -24,7 +52,7 @@ type Props = {
 const convertDisplay = card => {
   switch (card) {
     case NIGHT: {
-      return '0(Night)';
+      return '0(夜)';
     }
     case DOUBLE: {
       return 'x2';
@@ -41,10 +69,17 @@ const convertDisplay = card => {
   }
 };
 
+const renderPlayer = playerNumber => (
+  <View style={styles.playerWrapper}>
+    <Icon name="user" type="entypo" color="black" />
+    <Text>{playerNumber}</Text>
+  </View>
+);
+
 const renderLifePoint = lifePoint => {
   if (lifePoint === 3) {
     return (
-      <View>
+      <View style={styles.lifePoint}>
         <Icon name="favorite" color="red" />
         <Icon name="favorite" color="red" />
       </View>
@@ -52,25 +87,33 @@ const renderLifePoint = lifePoint => {
   }
   if (lifePoint === 2) {
     return (
-      <View>
+      <View style={styles.lifePoint}>
         <Icon name="favorite" color="red" />
         <Icon name="favorite-border" color="red" />
       </View>
     );
   }
   return (
-    <View>
+    <View style={styles.lifePoint}>
       <Icon name="favorite-border" color="red" />
       <Icon name="favorite-border" color="red" />
     </View>
   );
 };
 
+const renderCard = card => (
+  <View style={styles.card}>
+    <Text style={styles.cardText}>{card}</Text>
+  </View>
+);
+
 export const Player = ({ number, fieldCards, lifePoints }: Props): Node => (
   <View style={styles.container}>
-    <Text>{`プレイヤー：${number}`}</Text>
-    <Text>{`カード：${convertDisplay(fieldCards[number - 1])}`}</Text>
-    {renderLifePoint(lifePoints[number - 1])}
+    <View style={styles.upper}>
+      {renderPlayer(number)}
+      {renderLifePoint(lifePoints[number - 1])}
+    </View>
+    <View style={styles.lower}>{renderCard(convertDisplay(fieldCards[number - 1]))}</View>
   </View>
 );
 
