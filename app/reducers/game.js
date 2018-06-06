@@ -27,8 +27,8 @@ const reflectDamage2lifePoints = (answer, calledNumber, turnOf, lifePoints) => {
 
 const isGameOver = lifePoints => lifePoints[0] <= 0;
 
-const isValidNumber = (inputNumber, formerCalledNumber) =>
-  Number(inputNumber) ? inputNumber > formerCalledNumber : false;
+const isValidNumber = (inputNumber, prevCalledNumber) =>
+  Number(inputNumber) ? inputNumber > prevCalledNumber : false;
 
 export default (state = initialState, action = {}) => {
   const { type } = action;

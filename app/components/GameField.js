@@ -4,6 +4,7 @@ import React from 'react';
 import type { Node } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
+import { Icon, Badge } from 'react-native-elements';
 import Player from './Player';
 
 const styles = StyleSheet.create({
@@ -12,8 +13,29 @@ const styles = StyleSheet.create({
   },
   gameFeatures: {
     flex: 1,
+    flexDirection: 'row',
     marginTop: 30,
     backgroundColor: 'powderblue',
+  },
+  leftMargin: {
+    flex: 1,
+  },
+  deckWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deck: {
+    width: 50,
+    height: 60,
+  },
+  prevCallWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  prevCall: {
+    fontSize: 30,
   },
   players: {
     flex: 3,
@@ -51,20 +73,34 @@ const renderInvalidNumberAlert = (turnOf, inputNumber, formerCalledNumber) => {
   return null;
 };
 
+const renderDeck = numberOfCards => (
+  <View style={styles.deckWrapper}>
+    <View style={styles.deck}>
+      <Icon name="documents" type="entypo" color="black" size={40} />
+      <Badge value={numberOfCards} />
+    </View>
+  </View>
+);
+
+const renderPrevCall = calledNumber => (
+  <View style={styles.prevCallWrapper}>
+    <Text>前のコール</Text>
+    <Text style={styles.prevCall}>{calledNumber}</Text>
+  </View>
+);
+
 export const GameField = ({
   turnOf,
   inputNumber,
   calledNumber,
   lifePoints,
-  answer,
   deck,
 }: Props): Node => (
   <View style={styles.container}>
     <View style={styles.gameFeatures}>
-      <Text>{`プレイヤー${turnOf}のターン`}</Text>
-      <Text>{`前のコール：${calledNumber}`}</Text>
-      <Text>{`合計：${answer}`}</Text>
-      <Text>{`山札の残り：${deck.length}`}</Text>
+      <View style={styles.leftMargin} />
+      {renderDeck(deck.length)}
+      {renderPrevCall(calledNumber)}
       {renderGameOver(lifePoints[0])}
       {renderInvalidNumberAlert(turnOf, inputNumber, calledNumber)}
     </View>
@@ -77,7 +113,6 @@ const mapStateToProps = state => ({
   inputNumber: state.game.inputNumber,
   calledNumber: state.game.calledNumber,
   lifePoints: state.game.lifePoints,
-  answer: state.card.answer,
   deck: state.card.deck,
 });
 
