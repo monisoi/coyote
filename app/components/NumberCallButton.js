@@ -5,14 +5,14 @@ import type { Node } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { StyleSheet, View, Button, TextInput } from 'react-native';
-import { CALL_COYOTE, CHANGE_CALL_NUMBER, CALL_NUMBER } from '../actions/types';
+import { CHANGE_CALL_NUMBER, CALL_NUMBER } from '../actions/types';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: 'firebrick',
+    backgroundColor: 'lightslategray',
   },
   numberInputBoxWrapper: {},
   numberInputBox: {
@@ -50,7 +50,7 @@ const renderNumberCallButton = (dispatch, inputNumber) => (
   </View>
 );
 
-export const NumberCallButton = ({ dispatch, inputNumber }: Props): Node => (
+export const NumberCallButtonComponent = ({ dispatch, inputNumber }: Props): Node => (
   <View style={styles.container}>
     {renderNumberInputBox(dispatch, inputNumber)}
     {renderNumberCallButton(dispatch, inputNumber)}
@@ -61,4 +61,4 @@ const mapStateToProps = state => ({
   inputNumber: state.game.inputNumber,
 });
 
-export default connect(mapStateToProps)(NumberCallButton);
+export default connect(mapStateToProps)(NumberCallButtonComponent);

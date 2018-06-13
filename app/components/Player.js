@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   container: {
     width: '30%',
     height: '42%',
-    backgroundColor: 'steelblue',
+    backgroundColor: 'linen',
   },
   upper: {
     flex: 1,
@@ -33,14 +33,15 @@ const styles = StyleSheet.create({
   card: {
     width: '70%',
     height: '70%',
-    backgroundColor: 'gray',
+    backgroundColor: 'lightslategray',
     justifyContent: 'center',
     alignItems: 'center',
   },
   cardText: {
     fontSize: 18,
     fontWeight: 'bold',
-  }
+    color: 'white',
+  },
 });
 
 type Props = {
@@ -80,23 +81,23 @@ const renderLifePoint = lifePoint => {
   if (lifePoint === 3) {
     return (
       <View style={styles.lifePoint}>
-        <Icon name="favorite" color="red" />
-        <Icon name="favorite" color="red" />
+        <Icon name="favorite" color="sandybrown" />
+        <Icon name="favorite" color="sandybrown" />
       </View>
     );
   }
   if (lifePoint === 2) {
     return (
       <View style={styles.lifePoint}>
-        <Icon name="favorite" color="red" />
-        <Icon name="favorite-border" color="red" />
+        <Icon name="favorite" color="sandybrown" />
+        <Icon name="favorite-border" color="sandybrown" />
       </View>
     );
   }
   return (
     <View style={styles.lifePoint}>
-      <Icon name="favorite-border" color="red" />
-      <Icon name="favorite-border" color="red" />
+      <Icon name="favorite-border" color="sandybrown" />
+      <Icon name="favorite-border" color="sandybrown" />
     </View>
   );
 };
@@ -107,7 +108,7 @@ const renderCard = card => (
   </View>
 );
 
-export const Player = ({ number, fieldCards, lifePoints }: Props): Node => (
+export const PlayerComponent = ({ number, fieldCards, lifePoints }: Props): Node => (
   <View style={styles.container}>
     <View style={styles.upper}>
       {renderPlayer(number)}
@@ -122,4 +123,4 @@ const mapStateToProps = state => ({
   lifePoints: state.game.lifePoints,
 });
 
-export default connect(mapStateToProps)(Player);
+export default connect(mapStateToProps)(PlayerComponent);

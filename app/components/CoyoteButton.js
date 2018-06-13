@@ -4,13 +4,14 @@ import React from 'react';
 import type { Node } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Button } from 'react-native-elements';
 import { CALL_COYOTE } from '../actions/types';
 
 const styles = StyleSheet.create({
   coyoteButton: {
-    flex: 1,
-    backgroundColor: 'firebrick',
+    flex: 2,
+    backgroundColor: 'lightslategray',
   },
 });
 
@@ -19,12 +20,14 @@ type Props = {
   answer: number,
 };
 
-export const CoyoteButton = ({ dispatch, answer }: Props): Node => (
+export const CoyoteButtonComponent = ({ dispatch, answer }: Props): Node => (
   <View style={styles.coyoteButton}>
     <Button
+      large
+      iconRight={{ name: 'priority-high' }}
       onPress={() => dispatch({ type: CALL_COYOTE, answer })}
-      title="コヨーテ！"
-      color="#123456"
+      title="コヨーテ"
+      backgroundColor="powderblue"
     />
   </View>
 );
@@ -33,4 +36,4 @@ const mapStateToProps = state => ({
   answer: state.card.answer,
 });
 
-export default connect(mapStateToProps)(CoyoteButton);
+export default connect(mapStateToProps)(CoyoteButtonComponent);
