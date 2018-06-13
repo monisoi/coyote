@@ -119,7 +119,10 @@
         {
           "avoidQuotes": false
         }
-      ]
+      ],
+      "flowtype/define-flow-type": 1,
+      "flowtype/use-flow-type": 1,
+      "no-duplicate-imports": "off"
     }
   }
 }
