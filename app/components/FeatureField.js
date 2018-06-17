@@ -2,11 +2,10 @@
 
 import React from 'react';
 import type { Node } from 'react';
-import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { StyleSheet, Button, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Icon, Badge } from 'react-native-elements';
-import { START_NEW_GAME } from '../actions/types';
+import { AppText } from '../shared/Text';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,11 +16,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 30,
   },
-  startButton: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   deckWrapper: {
     flex: 1,
     justifyContent: 'center',
@@ -30,6 +24,15 @@ const styles = StyleSheet.create({
   deck: {
     width: 50,
     height: 60,
+  },
+  timer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  timerText: {
+    fontSize: 20,
   },
   prevCallWrapper: {
     flex: 1,
@@ -48,7 +51,6 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  dispatch: Dispatch,
   turnOf: number,
   inputNumber: number,
   calledNumber: number,
@@ -57,17 +59,17 @@ type Props = {
 };
 
 const renderGameOver = lifePoint =>
-  lifePoint <= 0 ? <Text style={styles.alertText}>GAME OVER</Text> : null;
+  lifePoint <= 0 ? <AppText style={styles.alertText}>GAME OVER</AppText> : null;
 
 const renderInvalidNumberAlert = (turnOf, inputNumber, formerCalledNumber) => {
   if (turnOf !== 1) {
     return null;
   }
   if (!Number(inputNumber)) {
-    return <Text style={styles.alertText}>数字でコールしてください</Text>;
+    return <AppText style={styles.alertText}>数字でコールしてください</AppText>;
   }
   if (inputNumber <= formerCalledNumber) {
-    return <Text style={styles.alertText}>前のターンよりも大きな数字をコールしてください</Text>;
+    return <AppText style={styles.alertText}>前のターンよりも大きな数字をコールしてください</AppText>;
   }
   return null;
 };
@@ -75,27 +77,27 @@ const renderInvalidNumberAlert = (turnOf, inputNumber, formerCalledNumber) => {
 const renderDeck = numberOfCards => (
   <View style={styles.deckWrapper}>
     <View style={styles.deck}>
-      <Icon name="documents" type="entypo" color="black" size={40} />
+      <Icon name="documents" type="entypo" color="#66605D" size={40} />
       <Badge value={numberOfCards} />
     </View>
   </View>
 );
 
-const renderPrevCall = calledNumber => (
-  <View style={styles.prevCallWrapper}>
-    <Text>前のコール</Text>
-    <Text style={styles.prevCall}>{calledNumber}</Text>
+const renderTimer = () => (
+  <View style={styles.timer}>
+    <Icon name="timer" type="matelialicons" color="#66605D" size={30} />
+    <AppText style={styles.timerText}>2:18</AppText>
   </View>
 );
 
-const renderStartButton = dispatch => (
-  <View style={styles.startButton}>
-    <Button onPress={() => dispatch({ type: START_NEW_GAME })} title="最初から" color="black" />
+const renderPrevCall = calledNumber => (
+  <View style={styles.prevCallWrapper}>
+    <AppText>前のコール</AppText>
+    <AppText style={styles.prevCall}>{calledNumber}</AppText>
   </View>
 );
 
 export const GameFieldComponent = ({
-  dispatch,
   turnOf,
   inputNumber,
   calledNumber,
@@ -104,8 +106,8 @@ export const GameFieldComponent = ({
 }: Props): Node => (
   <View style={styles.container}>
     <View style={styles.gameFeatures}>
-      {renderStartButton(dispatch)}
       {renderDeck(deck.length)}
+      {renderTimer()}
       {renderPrevCall(calledNumber)}
     </View>
     <View style={styles.alert}>

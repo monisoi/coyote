@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, View, Button } from 'react-native';
 import CoyoteButton from './CoyoteButton';
 import NumberCallButton from './NumberCallButton';
-import { GO_TO_NEXT_TURN } from '../actions/types';
+import { START_NEW_GAME, GO_TO_NEXT_TURN } from '../actions/types';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,8 +16,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  leftMargin: {
+  startButton: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   nextButton: {
     flex: 1,
@@ -30,6 +32,12 @@ type Props = {
   turnOf: number,
 };
 
+const renderStartButton = dispatch => (
+  <View style={styles.startButton}>
+    <Button onPress={() => dispatch({ type: START_NEW_GAME })} title="最初から" color="black" />
+  </View>
+);
+
 const renderActionButton = turnOf => (turnOf === 1 ? <NumberCallButton /> : <CoyoteButton />);
 
 const renderNextButton = dispatch => (
@@ -40,7 +48,7 @@ const renderNextButton = dispatch => (
 
 export const ControllerComponent = ({ dispatch, turnOf }: Props): Node => (
   <View style={styles.container}>
-    <View style={styles.leftMargin} />
+    {renderStartButton(dispatch)}
     {renderActionButton(turnOf)}
     {renderNextButton(dispatch)}
   </View>
