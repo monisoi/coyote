@@ -3,9 +3,9 @@
 import React from 'react';
 import type { Node } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Icon, Badge } from 'react-native-elements';
-import { AppText } from '../shared/Text';
+import { AppText } from '../custom/Text';
 
 const styles = StyleSheet.create({
   container: {
