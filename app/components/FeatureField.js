@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
     width: 50,
     height: 60,
   },
+  deckBadge: {
+    backgroundColor: '#66605D',
+  },
   timer: {
     flex: 1,
     flexDirection: 'row',
@@ -78,7 +81,7 @@ const renderDeck = numberOfCards => (
   <View style={styles.deckWrapper}>
     <View style={styles.deck}>
       <Icon name="documents" type="entypo" color="#66605D" size={40} />
-      <Badge value={numberOfCards} />
+      <Badge value={numberOfCards} containerStyle={styles.deckBadge} />
     </View>
   </View>
 );

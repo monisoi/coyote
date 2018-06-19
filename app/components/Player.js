@@ -3,23 +3,31 @@
 import React from 'react';
 import type { Node } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { NIGHT, DOUBLE, MAX0, UNKNOWN } from '../reducers/card';
+import { AppText } from '../custom/Text';
 
 const styles = StyleSheet.create({
   container: {
-    width: '30%',
-    height: '42%',
-    backgroundColor: 'linen',
+    width: '31%',
+    height: '47%',
+  },
+  userContainer: {
+    backgroundColor: '#CCC3BA',
+  },
+  aliveWrapper: {
+    flex: 1,
   },
   upper: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 7,
   },
   playerWrapper: {
     flex: 1,
-    flexDirection: 'row',
   },
   lifePoint: {
     flex: 1,
@@ -32,21 +40,29 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '70%',
-    height: '70%',
-    backgroundColor: 'lightslategray',
+    height: '80%',
+    backgroundColor: '#FFF9D9',
     justifyContent: 'center',
     alignItems: 'center',
   },
   cardText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'white',
+  },
+  deadWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
+
+const NORMAL_COLOR = '#66605D';
+const ACTIVE_COLOR = '#F58F71';
 
 type Props = {
   number: number,
   fieldCards: [number],
+  turnOf: number,
   lifePoints: [number],
 };
 
@@ -70,56 +86,77 @@ const convertDisplay = card => {
   }
 };
 
-const renderPlayer = playerNumber => (
-  <View style={styles.playerWrapper}>
-    <Icon name="user" type="entypo" color="black" />
-    <Text>{playerNumber}</Text>
-  </View>
-);
+const renderPlayer = (playerNumber, turnOf) => {
+  const iconColor = playerNumber === turnOf ? ACTIVE_COLOR : NORMAL_COLOR;
+  return (
+    <View style={styles.playerWrapper}>
+      <Icon name="user" type="entypo" color={iconColor} size={30} />
+    </View>
+  );
+};
 
 const renderLifePoint = lifePoint => {
   if (lifePoint === 3) {
     return (
       <View style={styles.lifePoint}>
-        <Icon name="favorite" color="sandybrown" />
-        <Icon name="favorite" color="sandybrown" />
+        <Icon name="favorite" color={NORMAL_COLOR} />
+        <Icon name="favorite" color={NORMAL_COLOR} />
       </View>
     );
   }
   if (lifePoint === 2) {
     return (
       <View style={styles.lifePoint}>
-        <Icon name="favorite" color="sandybrown" />
-        <Icon name="favorite-border" color="sandybrown" />
+        <Icon name="favorite" color={NORMAL_COLOR} />
+        <Icon name="favorite-border" color={NORMAL_COLOR} />
       </View>
     );
   }
   return (
     <View style={styles.lifePoint}>
-      <Icon name="favorite-border" color="sandybrown" />
-      <Icon name="favorite-border" color="sandybrown" />
+      <Icon name="favorite-border" color={NORMAL_COLOR} />
+      <Icon name="favorite-border" color={NORMAL_COLOR} />
     </View>
   );
 };
 
 const renderCard = card => (
   <View style={styles.card}>
-    <Text style={styles.cardText}>{card}</Text>
+    <AppText style={styles.cardText}>{card}</AppText>
   </View>
 );
 
-export const PlayerComponent = ({ number, fieldCards, lifePoints }: Props): Node => (
-  <View style={styles.container}>
+const renderAlivePlayer = (playerNumber, turnOf, fieldCards, lifePoints) => (
+  <View style={styles.aliveWrapper}>
     <View style={styles.upper}>
-      {renderPlayer(number)}
-      {renderLifePoint(lifePoints[number - 1])}
+      {renderPlayer(playerNumber, turnOf)}
+      {renderLifePoint(lifePoints[playerNumber - 1])}
     </View>
-    <View style={styles.lower}>{renderCard(convertDisplay(fieldCards[number - 1]))}</View>
+    <View style={styles.lower}>{renderCard(convertDisplay(fieldCards[playerNumber - 1]))}</View>
+  </View>
+);
+
+const renderDeadPlayer = () => (
+  <View style={styles.deadWrapper}>
+    <Icon name="block" color={NORMAL_COLOR} size={50}/>
+  </View>
+);
+
+export const PlayerComponent = ({ number, fieldCards, turnOf, lifePoints }: Props): Node => (
+  <View
+    style={
+      number === 1 ? StyleSheet.flatten([styles.container, styles.userContainer]) : styles.container
+    }
+  >
+    { lifePoints[number - 1] > 0
+      ? renderAlivePlayer(number, turnOf, fieldCards, lifePoints)
+      : renderDeadPlayer()}
   </View>
 );
 
 const mapStateToProps = state => ({
   fieldCards: state.card.field,
+  turnOf: state.game.turnOf,
   lifePoints: state.game.lifePoints,
 });
 
