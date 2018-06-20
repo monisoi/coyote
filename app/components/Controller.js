@@ -4,7 +4,8 @@ import React from 'react';
 import type { Node } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Icon } from 'react-native-elements';
 import CoyoteButton from './CoyoteButton';
 import NumberCallButton from './NumberCallButton';
 import { START_NEW_GAME, GO_TO_NEXT_TURN } from '../actions/types';
@@ -13,19 +14,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
   },
   startButton: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    height: '70%',
+    backgroundColor: '#CCC3BA',
   },
   nextButton: {
     flex: 1,
-    backgroundColor: 'steelblue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '70%',
+    backgroundColor: '#CCC3BA',
   },
 });
+
+const NORMAL_COLOR = '#66605D';
 
 type Props = {
   dispatch: Dispatch,
@@ -33,17 +40,17 @@ type Props = {
 };
 
 const renderStartButton = dispatch => (
-  <View style={styles.startButton}>
-    <Button onPress={() => dispatch({ type: START_NEW_GAME })} title="最初から" color="black" />
-  </View>
+  <TouchableOpacity style={styles.startButton} onPress={() => dispatch({ type: START_NEW_GAME })}>
+    <Icon name="back" type="entypo" color={NORMAL_COLOR} size={40} />
+  </TouchableOpacity>
 );
 
 const renderActionButton = turnOf => (turnOf === 1 ? <NumberCallButton /> : <CoyoteButton />);
 
 const renderNextButton = dispatch => (
-  <View style={styles.nextButton}>
-    <Button onPress={() => dispatch({ type: GO_TO_NEXT_TURN })} title="次へ" color="#123456" />
-  </View>
+  <TouchableOpacity style={styles.nextButton} onPress={() => dispatch({ type: GO_TO_NEXT_TURN })}>
+    <Icon name="controller-next" type="entypo" color={NORMAL_COLOR} size={40} />
+  </TouchableOpacity>
 );
 
 export const ControllerComponent = ({ dispatch, turnOf }: Props): Node => (
