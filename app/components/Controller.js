@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 const NORMAL_COLOR = '#66605D';
 
 type Props = {
-  dispatch: Dispatch,
+  dispatch: Dispatch<any>,
   turnOf: number,
 };
 

@@ -4,48 +4,69 @@ import React from 'react';
 import type { Node } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Button, TextInput } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
+import { Button, Input } from 'react-native-elements';
 import { CHANGE_CALL_NUMBER, CALL_NUMBER } from '../actions/types';
 
 const styles = StyleSheet.create({
   container: {
     flex: 2,
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: 'lightslategray',
+    height: '70%',
   },
-  numberInputBoxWrapper: {},
-  numberInputBox: {
-    borderColor: 'gray',
-    borderWidth: 1,
-    width: 40,
+  inputWrapper: {
+    flex: 1,
+    height: '30%',
+    width: '40%',
   },
-  numberCallButtonWrapper: {},
+  input: {
+    backgroundColor: 'white',
+    borderRadius: 5,
+    textAlign: 'center',
+  },
+  buttonWrapper: {
+    flex: 1,
+    height: '40%',
+  },
+  button: {
+    width: '100%',
+    backgroundColor: '#F58F71',
+    borderRadius: 5,
+  },
+  buttonTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  }
 });
 
 type Props = {
-  dispatch: Dispatch,
+  dispatch: Dispatch<any>,
   inputNumber: number,
 };
 
 const renderNumberInputBox = (dispatch, inputNumber) => (
-  <View style={styles.numberCallButtonWrapper}>
-    <TextInput
+  <View style={styles.inputWrapper}>
+    <Input
       onChangeText={text => dispatch({ type: CHANGE_CALL_NUMBER, inputNumber: Number(text) })}
       value={String(inputNumber)}
       maxLength={3}
       keyboardType="numeric"
-      style={styles.numberInputBox}
+      inputStyle={styles.input}
+      underlineColorAndroid='rgba(0,0,0,0)'
     />
   </View>
 );
 
 const renderNumberCallButton = (dispatch, inputNumber) => (
-  <View style={styles.numberCallButtonWrapper}>
+  <View style={styles.buttonWrapper}>
     <Button
       onPress={() => dispatch({ type: CALL_NUMBER, inputNumber })}
-      title="コール"
-      color="#123456"
+      title="コール!"
+      buttonStyle={styles.button}
+      titleStyle={styles.buttonTitle}
     />
   </View>
 );

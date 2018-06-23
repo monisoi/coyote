@@ -9,25 +9,36 @@ import { Button } from 'react-native-elements';
 import { CALL_COYOTE } from '../actions/types';
 
 const styles = StyleSheet.create({
-  coyoteButton: {
+  buttonWrapper: {
     flex: 2,
-    backgroundColor: 'lightslategray',
+    height: '70%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  button: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: '#F58F71',
+    borderRadius: 8,
+  },
+  buttonTitle: {
+    fontSize: 25,
+    fontWeight: 'bold',
+  }
 });
 
 type Props = {
-  dispatch: Dispatch,
+  dispatch: Dispatch<any>,
   answer: number,
 };
 
 export const CoyoteButtonComponent = ({ dispatch, answer }: Props): Node => (
-  <View style={styles.coyoteButton}>
+  <View style={styles.buttonWrapper}>
     <Button
-      large
-      iconRight={{ name: 'priority-high' }}
       onPress={() => dispatch({ type: CALL_COYOTE, answer })}
-      title="コヨーテ"
-      backgroundColor="powderblue"
+      title="コヨーテ！"
+      buttonStyle={styles.button}
+      titleStyle={styles.buttonTitle}
     />
   </View>
 );
