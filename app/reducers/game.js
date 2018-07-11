@@ -13,6 +13,7 @@ const initialState = {
   inputNumber: 0,
   calledNumber: 0,
   lifePoints: [3, 3, 3, 3, 3, 3],
+  isGameOver: false,
 };
 
 const reflectDamage2lifePoints = (answer, calledNumber, turnOf, lifePoints) => {
@@ -52,17 +53,18 @@ export default (state = initialState, action = {}) => {
     case CALL_COYOTE: {
       const { turnOf, calledNumber, lifePoints } = state;
       const { answer = 0 } = action || {};
-      return isGameOver(lifePoints)
+      const newLifePoints = reflectDamage2lifePoints(answer, calledNumber, turnOf, lifePoints);
+      return isGameOver(newLifePoints)
         ? {
             ...initialState,
-            turnOf: Math.floor(Math.random() * PLAYERS + 1),
-            calledNumber: 1,
+            lifePoints: newLifePoints,
+            isGameOver: true,
           }
         : {
             ...state,
             turnOf: (turnOf + 1) % 6 || 6,
             calledNumber: 1,
-            lifePoints: reflectDamage2lifePoints(answer, calledNumber, turnOf, lifePoints),
+            lifePoints: newLifePoints,
           };
     }
     case CHANGE_CALL_NUMBER: {

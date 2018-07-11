@@ -6,6 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import FeatureField from './FeatureField';
 import GameField from './GameField';
 import Controller from './Controller';
+import Overlay from './Overlay';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,5 +20,6 @@ export default (): Node => (
     <FeatureField />
     <GameField />
     <Controller />
+    <Overlay />
   </View>
 );
