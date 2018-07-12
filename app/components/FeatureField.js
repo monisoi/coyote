@@ -45,36 +45,12 @@ const styles = StyleSheet.create({
   prevCall: {
     fontSize: 30,
   },
-  alert: {
-    flex: 1,
-  },
-  alertText: {
-    color: 'red',
-  },
 });
 
 type Props = {
-  turnOf: number,
-  inputNumber: number,
   calledNumber: number,
   lifePoints: [number],
   deck: [number],
-};
-
-const renderGameOver = lifePoint =>
-  lifePoint <= 0 ? <AppText style={styles.alertText}>GAME OVER</AppText> : null;
-
-const renderInvalidNumberAlert = (turnOf, inputNumber, formerCalledNumber) => {
-  if (turnOf !== 1) {
-    return null;
-  }
-  if (!Number(inputNumber)) {
-    return <AppText style={styles.alertText}>数字でコールしてください</AppText>;
-  }
-  if (inputNumber <= formerCalledNumber) {
-    return <AppText style={styles.alertText}>前のターンよりも大きな数字をコールしてください</AppText>;
-  }
-  return null;
 };
 
 const renderDeck = numberOfCards => (
@@ -100,29 +76,17 @@ const renderPrevCall = calledNumber => (
   </View>
 );
 
-export const GameFieldComponent = ({
-  turnOf,
-  inputNumber,
-  calledNumber,
-  lifePoints,
-  deck,
-}: Props): Node => (
+export const GameFieldComponent = ({ calledNumber, lifePoints, deck }: Props): Node => (
   <View style={styles.container}>
     <View style={styles.gameFeatures}>
       {renderDeck(deck.length)}
       {renderTimer()}
       {renderPrevCall(calledNumber)}
     </View>
-    <View style={styles.alert}>
-      {renderGameOver(lifePoints[0])}
-      {renderInvalidNumberAlert(turnOf, inputNumber, calledNumber)}
-    </View>
   </View>
 );
 
 const mapStateToProps = state => ({
-  turnOf: state.game.turnOf,
-  inputNumber: state.game.inputNumber,
   calledNumber: state.game.calledNumber,
   lifePoints: state.game.lifePoints,
   deck: state.card.deck,

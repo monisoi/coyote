@@ -6,7 +6,12 @@ import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import { CHANGE_CALL_NUMBER, CALL_NUMBER } from '../actions/types';
+import {
+  CHANGE_CALL_NUMBER,
+  CALL_NUMBER,
+  REFRESH_DISPLAY_STATE,
+  ON_FOCUS_NUMBER_INPUT,
+} from '../actions/types';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +44,7 @@ const styles = StyleSheet.create({
   buttonTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-  }
+  },
 });
 
 type Props = {
@@ -51,11 +56,13 @@ const renderNumberInputBox = (dispatch, inputNumber) => (
   <View style={styles.inputWrapper}>
     <Input
       onChangeText={text => dispatch({ type: CHANGE_CALL_NUMBER, inputNumber: Number(text) })}
+      onFocus={() => dispatch({ type: ON_FOCUS_NUMBER_INPUT })}
+      onEndEditing={() => dispatch({ type: REFRESH_DISPLAY_STATE })}
       value={String(inputNumber)}
       maxLength={3}
       keyboardType="numeric"
       inputStyle={styles.input}
-      underlineColorAndroid='rgba(0,0,0,0)'
+      underlineColorAndroid="rgba(0,0,0,0)"
     />
   </View>
 );
