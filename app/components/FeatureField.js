@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, View } from 'react-native';
 import { Icon, Badge } from 'react-native-elements';
 import { AppText } from '../custom/Text';
+import Timer from './Timer';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,11 +32,17 @@ const styles = StyleSheet.create({
   timer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
+    paddingLeft: 25,
+    paddingRight: 10,
+  },
+  timerIcon: {
+    flex: 1,
   },
   timerText: {
+    flex: 2,
     fontSize: 20,
+    textAlign: 'left',
   },
   prevCallWrapper: {
     flex: 1,
@@ -48,6 +55,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
+  turnOf: number,
   calledNumber: number,
   lifePoints: [number],
   deck: [number],
@@ -62,10 +70,16 @@ const renderDeck = numberOfCards => (
   </View>
 );
 
-const renderTimer = () => (
+const renderDummyTimer = () => (
   <View style={styles.timer}>
-    <Icon name="timer" type="matelialicons" color="#66605D" size={30} />
-    <AppText style={styles.timerText}>2:18</AppText>
+    <Icon
+      name="timer"
+      type="matelialicons"
+      color="#66605D"
+      size={30}
+      containerStyle={styles.timerIcon}
+    />
+    <AppText style={styles.timerText}>{' --:--'}</AppText>
   </View>
 );
 
@@ -76,17 +90,18 @@ const renderPrevCall = calledNumber => (
   </View>
 );
 
-export const GameFieldComponent = ({ calledNumber, lifePoints, deck }: Props): Node => (
+export const GameFieldComponent = ({ turnOf, calledNumber, lifePoints, deck }: Props): Node => (
   <View style={styles.container}>
     <View style={styles.gameFeatures}>
       {renderDeck(deck.length)}
-      {renderTimer()}
+      {turnOf === 1 ? renderDummyTimer() : <Timer />}
       {renderPrevCall(calledNumber)}
     </View>
   </View>
 );
 
 const mapStateToProps = state => ({
+  turnOf: state.game.turnOf,
   calledNumber: state.game.calledNumber,
   lifePoints: state.game.lifePoints,
   deck: state.card.deck,
